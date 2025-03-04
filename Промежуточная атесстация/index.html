@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задания</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Список заданий</h1>
+
+    <ul class="navigation">
+        <li>
+            <a href="#" data-target="task1" data-url="task1.html">Задание 1</a>
+            <div class="description" id="task1">
+                Описание задания 1: Практика на основные HTML теги. Что бы перейти на задание нажните на Задание 1 еще раз.
+            </div>
+        </li>
+        <li>
+            <a href="#" data-target="task2" data-url="task2.html">Задание 2</a>
+            <div class="description" id="task2">
+                Описание задания 2: Практика на основные HTML теги. Что бы перейти на задание нажните на Задание 2 еще раз.
+            </div>
+        </li>
+        <li>
+            <a href="#" data-target="task3" data-url="task3.html">Задание 3</a>
+            <div class="description" id="task3">
+                Описание задания 3: Практика на основные HTML теги. Что бы перейти на задание нажните на Задание 3 еще раз.
+            </div>
+        </li>
+        <li>
+            <a href="#" data-target="task4" data-url="task4.html">Задание 4</a>
+            <div class="description" id="task4">
+                Описание задания 4: Практика на основные CSS свойства. Что бы перейти на задание нажните на Задание 4 еще раз.
+            </div>
+        </li>
+        <li>
+            <a href="#" data-target="task5" data-url="task5.html">Задание 5</a>
+            <div class="description" id="task5">
+                Описание задания 5: Практика на макетах на HTML и CSS №2. Что бы перейти на задание нажните на Задание 5 еще раз.
+            </div>
+        </li>
+    </ul>
+
+    <script>
+        const links = document.querySelectorAll('.navigation a');
+        let currentlyActive = null; // Переменная для хранения активной ссылки
+
+        links.forEach(link => {
+            let clickedOnce = false;
+
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                const targetId = this.dataset.target;
+                const description = document.getElementById(targetId);
+                const taskUrl = this.dataset.url;
+
+                // Сбрасываем состояние для предыдущей активной ссылки
+                if (currentlyActive && currentlyActive !== this) {
+                    currentlyActive.classList.remove('active');
+                    document.getElementById(currentlyActive.dataset.target).classList.remove('show');
+                    currentlyActive.clickedOnce = false; // Сбрасываем счетчик
+                }
+
+                if (!clickedOnce) {
+                    // Первый клик: показываем описание
+                    clickedOnce = true;
+                    this.clickedOnce = true; // Сохраняем состояние clickedOnce для этой ссылки
+                    this.classList.add('active'); // Добавляем класс active для стилизации
+                    currentlyActive = this;
+
+                    // Скрываем все описания, затем показываем нужное
+                    document.querySelectorAll('.description').forEach(desc => {
+                        desc.classList.remove('show');
+                    });
+
+                    description.classList.add('show');
+                } else {
+                    // Второй клик: перенаправляем на страницу с заданием
+                    window.location.href = taskUrl;
+                }
+            });
+
+            // Добавляем свойство clickedOnce к ссылке
+            link.clickedOnce = false;
+        });
+    </script>
+
+</body>
+</html>
